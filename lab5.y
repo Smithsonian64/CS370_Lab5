@@ -1,15 +1,34 @@
+/*
+The yacc file reads tokens taken from lex and parses them according to the
+ALGOL-C grammar structure. All constants will be emitted through stderr and if
+there is an error it will be emmitted through stderr as well as the line number.
+
+This yacc routine will exit as soon as an error is encountered.
+
+ALGOL-C ignores whitespaces and newlines so if there is a lot of empty lines to
+to space out a program line counts may be inaccurate for errors. for example, a mispelled END token will be parsed as an ID and the routine will not detect an
+error until, most likely, the next token, even if it is several empty newlines
+away. See test.al for an example. The error is on line 10 but the routine will
+not emit an error until line 12.
+
+Michael Smith
+March 2020
+*/
 %{
 #include <stdio.h>
 #include <ctype.h>
-#include <stdbool.h>
 #include "lex.yy.c"
+
+int mydebug = 0;
 
 extern int line;
 
 void yyerror (s)
 	char *s;
 {
-	printf("error on line %d: %s\n", line, s);
+	fprintf(stderr, "error on line %d: %s\nAborting...\n", line, s);
+	exit(0);
+
 }
 %}
 
@@ -23,26 +42,36 @@ void yyerror (s)
 %token ID NUM INT VOID BOOLEAN BEG END IF THEN ELSE WHILE DO RET READ WRITE
 %token LE LT GE GT EQ NE
 %token AND OR TRUE FALSE NOT
+
+%type<value> NUM
+%type<string> ID
+
 %%
 
-program		:	decls_list	
+program		:	decls_list	 
 		;
 
 decls_list 	:	dec
-	   	|	decls_list dec
+	   	|	dec decls_list
 		;
 
 dec		:	var_dec
      		|	fun_dec
 		;
 
-var_dec		:	type_spec var_list
+var_dec		:	type_spec var_list ';'
 	 	;
 
-var_list	:	ID '\n'
-	 	|	ID '[' NUM ']' '\n'
-		|	ID ',' var_list '\n'
-		|	ID '[' NUM ']' ',' var_list '\n'
+var_list	:	ID
+	 	|	ID '[' NUM ']'
+			{
+				fprintf(stderr, "Found constant: %d on line: %d\n",$3, line);
+			}
+		|	ID ',' var_list 
+		|	ID '[' NUM ']' ',' var_list
+			{
+				fprintf(stderr, "Found constant: %d on line: %d\n",$3, line);
+			}
 		;
 
 type_spec	:	INT
@@ -50,7 +79,7 @@ type_spec	:	INT
 		|	BOOLEAN
 	  	;
 
-fun_dec		:	type_spec ID '(' params ')' '\n' compound_stmt
+fun_dec		:	type_spec ID '(' params ')' compound_stmt
 	 	;
 
 params		:	VOID
@@ -69,12 +98,11 @@ compound_stmt	:	BEG local_decs stmt_list END
 	      	;
 
 local_decs	:	/*nothing*/
-	   	|	var_dec
-		|	local_decs var_dec
+	   	|	local_decs var_dec
 		;
 
 stmt_list	:	/*nothing*/
-	  	|	stmt
+	  	|	stmt_list stmt
 		;
 
 stmt		:	expression_stmt
@@ -92,13 +120,13 @@ expression_stmt	:	expression ';'
 		;
 
 selection_stmt	:	IF expression THEN stmt
-	       	|	IF expression THEN stmt '[' ELSE stmt ']'
+	       	|	IF expression THEN stmt ELSE stmt
 		;
 
 iteration_stmt	:	WHILE expression DO stmt
 	       	;
 
-return_stmt	:	RET
+return_stmt	:	RET ';'
 	    	|	RET expression ';'
 		;
 
@@ -130,8 +158,7 @@ relop		:	LE
 		|	NE
 		;
 
-additive_expression	:	/*nothing*/
-		    	|	term additive_expression
+additive_expression	:	term
 			|	term addop additive_expression
 			;
 
@@ -139,8 +166,7 @@ addop		:	'+'
        		|	'-'
 		;
 
-term		:	/*nothing*/
-      		|	factor
+term		:	factor
 		|	factor multop term
 		;
 
@@ -152,6 +178,9 @@ multop		:	'*'
 
 factor		:	'(' expression	')'
 		|	NUM
+			{
+				fprintf(stderr, "Found constant: %d on line: %d\n",$1, line);
+			}
 		|	variable
 		|	call
 		|	TRUE
@@ -163,8 +192,8 @@ call		:	ID '(' args ')'
       		|	
 		;
 
-args		:	/*nothing*/
-      		|	arg_list
+args		:	arg_list
+      		|	/*empty*/
 		;
 
 arg_list	:	expression
@@ -175,6 +204,7 @@ arg_list	:	expression
 
 int main(void) {
 	yyparse();
+	fprintf(stderr, "No errors found\n");
 	return 1;
 }
 

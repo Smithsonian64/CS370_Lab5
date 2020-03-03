@@ -397,9 +397,9 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    4,    1,    1,    1,    1,    5,    1,    1,
-        1,    1,    5,    5,    5,    1,    1,    6,    6,    6,
-        6,    6,    6,    6,    6,    6,    6,    1,    1,    7,
+        1,    2,    4,    1,    1,    1,    1,    5,    1,    5,
+        5,    1,    5,    5,    5,    1,    5,    6,    6,    6,
+        6,    6,    6,    6,    6,    6,    6,    1,    5,    7,
         8,    9,    1,    1,   10,   10,   10,   10,   10,   10,
        10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
        10,   10,   10,   10,   10,   10,   10,   10,   10,   10,
@@ -517,7 +517,15 @@ int yy_flex_debug = 0;
 char yytext[YYLMAX];
 char *yytext_ptr;
 #line 1 "lab5.l"
-#line 2 "lab5.l"
+/*
+This lex file takes in input and gives token and characters related to the
+ALGOL-C grammar structure. I also keeps track of the line number.
+
+Michael Smith
+March 2020
+
+*/
+#line 10 "lab5.l"
 
 int debug = 0;
 int line = 1;
@@ -526,8 +534,8 @@ int line = 1;
 #include <string.h>
 #include "y.tab.h"
 
-#line 529 "lex.yy.c"
-#line 530 "lex.yy.c"
+#line 537 "lex.yy.c"
+#line 538 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -744,10 +752,10 @@ YY_DECL
 		}
 
 	{
-#line 12 "lab5.l"
+#line 20 "lab5.l"
 
 
-#line 750 "lex.yy.c"
+#line 758 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -816,216 +824,243 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 14 "lab5.l"
+#line 22 "lab5.l"
 {
+				if(debug) printf("found \"type spec: int\"\n");
 				return(INT);
 			}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 18 "lab5.l"
+#line 27 "lab5.l"
 {
+				if(debug) printf("found \"void\"\n");
 				return(VOID);
 			}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 22 "lab5.l"
+#line 32 "lab5.l"
 {
+				if(debug) printf("found \"boolean\"\n");
 				return(BOOLEAN);
 			}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 26 "lab5.l"
+#line 37 "lab5.l"
 {
+				if(debug) printf("found \"begin\"\n");
 				return(BEG);
 			}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 30 "lab5.l"
+#line 42 "lab5.l"
 {
+				if(debug) printf("found \"end\"\n");
 				return(END);
 			}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 34 "lab5.l"
+#line 47 "lab5.l"
 {
+				if(debug) printf("found \"if\"\n");
 				return(IF); 
 			}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 38 "lab5.l"
+#line 52 "lab5.l"
 {
+				if(debug) printf("found \"then\"\n");
 				return(THEN);
 			}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 42 "lab5.l"
+#line 57 "lab5.l"
 {
+				if(debug) printf("found \"else\"\n");
 				return(ELSE);
 			}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 46 "lab5.l"
+#line 62 "lab5.l"
 {
+				if(debug) printf("found \"while\"\n");
 				return(WHILE);
 			}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 50 "lab5.l"
+#line 67 "lab5.l"
 {
+				if(debug) printf("found \"do\"\n");
 				return(DO);
 			}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 54 "lab5.l"
+#line 72 "lab5.l"
 {
+				if(debug) printf("found \"return\"\n");
 				return(RET);
 			}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 58 "lab5.l"
+#line 77 "lab5.l"
 {
+				if(debug) printf("found \"read\"\n");
 				return(READ);
 			}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 62 "lab5.l"
+#line 82 "lab5.l"
 {
+				if(debug) printf("found \"write\"\n");
 				return(WRITE);
 			}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 66 "lab5.l"
+#line 87 "lab5.l"
 {
+				if(debug) printf("found \"and\"\n");
 				return(AND);
 			}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 70 "lab5.l"
+#line 92 "lab5.l"
 {
+				if(debug) printf("found \"or\"\n");
 				return(OR);
 			}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 74 "lab5.l"
+#line 97 "lab5.l"
 {
+				if(debug) printf("found \"true\"\n");
 				return(TRUE);
 			}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 78 "lab5.l"
+#line 102 "lab5.l"
 {
+				if(debug) printf("found \"false\"\n");
 				return(FALSE);
 			}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 82 "lab5.l"
+#line 107 "lab5.l"
 {
+				if(debug) printf("found \"not\"\n");
 				return(NOT);
 			}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 86 "lab5.l"
+#line 112 "lab5.l"
 {
+				if(debug) printf("found \"LE\"\n");
 				return(LE);
 			}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 90 "lab5.l"
+#line 117 "lab5.l"
 {
+				if(debug) printf("found \"LT\"\n");
 				return(LT);
 			}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 94 "lab5.l"
+#line 122 "lab5.l"
 {
+				if(debug) printf("found \"GE\"\n");
 				return(GE);
 			}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 98 "lab5.l"
+#line 127 "lab5.l"
 {
+				if(debug) printf("found \"GT\"\n");
 				return(GT);
 			}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 102 "lab5.l"
+#line 132 "lab5.l"
 {
+				if(debug) printf("found \"EQ\"\n");
 				return(EQ);
 			}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 106 "lab5.l"
+#line 137 "lab5.l"
 {
+				if(debug) printf("found \"NE\"\n");
 				return(NE);
 			}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 110 "lab5.l"
+#line 142 "lab5.l"
 {
 				yylval.string = strdup(yytext);
+				if(debug) printf("found \"ID: %s\"\n", yytext);
 				return (ID);
 			}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 115 "lab5.l"
+#line 148 "lab5.l"
 {
 				yylval.value = atoi((const char *)yytext);
+				if(debug) printf("found \"NUM: %s\"\n", yytext);
 				return(NUM);
 			}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 120 "lab5.l"
+#line 154 "lab5.l"
 {
+				if(debug) printf("found \"char: %s\"\n", yytext);
 				return(*yytext);
 			}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 124 "lab5.l"
+#line 159 "lab5.l"
 {
 			}
 	YY_BREAK
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
-#line 127 "lab5.l"
+#line 162 "lab5.l"
 {
+				if(debug) printf("found \"new line\"\n");
 				line++;
-				return(*yytext);
 			}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 133 "lab5.l"
+#line 168 "lab5.l"
 ECHO;
 	YY_BREAK
-#line 1028 "lex.yy.c"
+#line 1063 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2042,7 +2077,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 133 "lab5.l"
+#line 168 "lab5.l"
 
 
 int yywrap(void) {

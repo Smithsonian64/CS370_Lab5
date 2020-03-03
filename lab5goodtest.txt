@@ -2,8 +2,7 @@ Found constant: 100 on line: 1
 Found constant: 100 on line: 3
 Found constant: 10 on line: 4
 Found constant: 10 on line: 5
-Found constant: 3 on line: 7
 Found constant: 4 on line: 7
+Found constant: 10 on line: 7
 Found constant: 1 on line: 7
-error on line 12: syntax error
-Aborting...
+No errors found
